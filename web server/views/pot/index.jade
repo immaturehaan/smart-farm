@@ -1,0 +1,94 @@
+extends ../layout
+
+block hiddenBlock
+  #modalAddPot.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .text-center(role='form', action='/pots/add', method='post')
+          .modal-header.text-center
+            h4.modal-title.w-100.font-weight-bold Add new pot
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body.mx-3
+            .md-form.mb-5
+              input#addPot-name.form-control.validate(type='text', name='potName', required, autofocus)
+              label(data-error='wrong', data-success='right', for='addPot-name') Your pot name
+            .md-form.mb-5
+              input#addPot-Id.form-control.validate(type='text', name='potId', required)
+              label(data-error='wrong', data-success='right', for='addPot-Id') Your pot ID
+          .modal-footer.d-flex.justify-content-center
+            button#addPot().btn.btn-deep-orange Add
+
+  #modalConfirmDelete.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog.modal-sm.modal-notify.modal-danger(role='document')
+      .modal-content.text-center
+        .modal-header.d-flex.justify-content-center
+          p.heading Are you sure?
+        .modal-body
+          i.fa.fa-times.fa-4x.animated.rotateIn
+        .modal-footer.flex-center
+          a.btn.btn-outline-danger(href='') Yes
+          a.btn.btn-danger.waves-effect(type='button', data-dismiss='modal') No
+
+block content
+  div.container.pot
+    button(type="button", class="btn btn-primary", data-toggle='modal', data-target='#modalAddPot') Add new pot
+    div.row.mt-5.potList.e-hide
+      .card.chart-card.col-md-4.py-3
+        .card-body.pb-0
+          .d-flex.justify-content-between.align-items-center
+            h4.card-title.font-weight-bold.col-md-8
+              input#potName.form-control(value=Pot.Name)
+            .custom-control.custom-switch
+              input#autoPumpSwitch.custom-control-input(type='checkbox')
+              label.custom-control-label(for='autoPumpSwitch') Auto
+          
+          .d-flex.justify-content-between
+            p#curSoil.display-4.align-self-end 
+              | #{PotLog.CurSoil}
+              | %
+            .custom-control.custom-radio.mt-2
+              input#activePot.form-check-input(type='radio' disabled)
+              label#UpdateAt.custom-control-label(for='activePot') Update: #{PotLog.UpdateAt}
+        .classic-tabs
+          ul.nav.tabs-white.nav-fill(role='tablist')
+            li.nav-item.ml-0
+              a.nav-link.waves-light.active(data-toggle='tab', href='#panel1001', role='tab') Status
+            li.nav-item
+              a.nav-link.waves-light(data-toggle='tab', href='#panel1002', role='tab') Attributes
+            li.nav-item
+              a.nav-link.waves-light(data-toggle='tab', href='#panel1003', role='tab') Setting
+          .tab-content.rounded-bottom
+            #panel1001.tab-pane.fade.in.show.active(role='tabpanel')
+              .d-flex.justify-content-between.align-items-center
+                button#manualPump.btn.btn-light(type='button') Manual Pump
+                .custom-control.custom-radio
+                  input#activePump.form-check-input(type='radio' disabled)
+                  label.custom-control-label(for='activePot') pumping
+              canvas.lineChart(height='250px')
+            #panel1002.tab-pane.fade(role='tabpanel')
+              .md-form
+                input#lowPumpLevel.form-control(type='number', value=Pot.LowPumpLevel)
+                label(for='lowPumpLevel') Low pump level
+              .md-form
+                input#highPumpLevel.form-control(type='number', value=Pot.HighPumpLevel)
+                label(for='highPumpLevel') High pump level
+              div.text-center
+                button#updatePumpLevel.btn.btn-primary(type='button') Update
+
+            #panel1003.tab-pane.fade(role='tabpanel')
+              img.img-fluid.z-depth-1.rounded.mb-3(alt='sample image', src='https://mdbootstrap.com/img/Photos/Others/intro1.jpg')
+              .d-flex.justify-content-between
+                button#resetSetting.btn.btn-warning(type='button') Reset wifi
+                button#removePot.btn.btn-danger(type='button', data-toggle='modal', data-target='#modalConfirmDelete') Remove
+
+block scriptBlock
+  script.
+    var GPot = {Pot: !{JSON.stringify(Pot)}};
+    var GPotLog = !{JSON.stringify(PotLog)};
+    console.log(GPot);
+    console.log(GPotLog);
+    initChart();
+    updateChart();
+    updateInfo();
+    setInterval(updateInfo, 3000);

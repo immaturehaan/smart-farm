@@ -1,0 +1,141 @@
+doctype html
+html
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+  head
+    title='Smartfarm.IO'
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    link(rel='stylesheet', href='/stylesheets/c-style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/mdb.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.min.css')
+    #modalLogin.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog.modal-dialog-centered.modal-notify.modal-info(role='document')
+        .modal-content.text-center
+          .modal-header.d-flex.justify-content-center
+            p.heading Login
+          .modal-body
+            form.text-center(style='color: #757575;', role='form', action='/login', method='post')
+              .md-form
+                input#inputEmail.form-control(type='email', name='username', required, autofocus)
+                label(for='inputEmail') E-mail
+              .md-form
+                input#inputPassword.form-control(type='password', name='password')
+                label(for='inputPassword') Password
+              .d-flex.justify-content-around
+                div
+                  .form-check
+                    input#materialLoginFormRemember.form-check-input(type='checkbox')
+                    label.form-check-label(for='materialLoginFormRemember') Remember me
+                div
+                  a(href='') Forgot password?
+              button.btn.btn-outline-info.btn-rounded.btn-block.my-4.waves-effect.z-depth-0(type='submit') Sign in
+              p
+                | Not a member? 
+                a(href='/register') Register
+              p or sign in with:
+              a.btn-floating.btn-fb.btn-sm(type='button')
+                i.fa.fa-facebook-f
+              a.btn-floating.btn-tw.btn-sm(type='button')
+                i.fa.fa-twitter
+              a.btn-floating.btn-li.btn-sm(type='button')
+                i.fa.fa-linkedin-in
+              a.btn-floating.btn-git.btn-sm(type='button')
+                i.fa.fa-github
+
+    #modalRegister.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog.modal-dialog-centered.modal-notify.modal-info(role='document')
+        .modal-content.text-center
+          .modal-header.d-flex.justify-content-center
+            p.heading Sign up
+          .modal-body
+            form.text-center(style='color: #757575;', role='form', action="/register", method="post")
+              .form-row
+                .col
+                  .md-form
+                    input#materialRegisterFormFirstName.form-control(type='text', name="name")
+                    label(for='materialRegisterFormFirstName') First name
+                .col
+                  .md-form
+                    input#materialRegisterFormLastName.form-control(type='text')
+                    label(for='materialRegisterFormLastName') Last name
+              .md-form.mt-0
+                input#materialRegisterFormEmail.form-control(type='email', name="username")
+                label(for='materialRegisterFormEmail') E-mail
+              .md-form
+                input#materialRegisterFormPassword.form-control(type='password', aria-describedby='materialRegisterFormPasswordHelpBlock', name="password")
+                label(for='materialRegisterFormPassword') Password
+                small#materialRegisterFormPasswordHelpBlock.form-text.text-muted.mb-4
+                  | At least 8 characters and 1 digit
+              .md-form
+                input#materialRegisterFormPhone.form-control(type='password', aria-describedby='materialRegisterFormPhoneHelpBlock')
+                label(for='materialRegisterFormPhone') Phone number
+                small#materialRegisterFormPhoneHelpBlock.form-text.text-muted.mb-4
+                  | Optional - for two step authentication
+              .form-check
+                input#materialRegisterFormNewsletter.form-check-input(type='checkbox')
+                label.form-check-label(for='materialRegisterFormNewsletter') Subscribe to our newsletter
+              button.btn.btn-outline-info.btn-rounded.btn-block.my-4.waves-effect.z-depth-0(type='submit') Sign up
+              p or sign up with:
+              a.btn-floating.btn-fb.btn-sm(type='button')
+                i.fa.fa-facebook-f
+              a.btn-floating.btn-tw.btn-sm(type='button')
+                i.fa.fa-twitter
+              a.btn-floating.btn-li.btn-sm(type='button')
+                i.fa.fa-linkedin-in
+              a.btn-floating.btn-git.btn-sm(type='button')
+                i.fa.fa-github
+              hr
+              p
+                | By clicking 
+                em Sign up 
+                |  you agree to our 
+                a(href='', target='_blank') terms of service
+  block hiddenBlock
+
+  body
+    nav.mb-1.navbar.navbar-expand-lg.navbar-dark.info-color
+      a.navbar-brand(href='/') Smart Farm IO
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent-4', aria-controls='navbarSupportedContent-4', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent-4.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          if (user)
+            li.nav-item.active
+              a.nav-link(href='/pots')
+                i.fa.fa-seedling
+                | Pots
+                span.sr-only (current)
+            li.nav-item
+              a.nav-link(href='#')
+                | 1
+                i.fa.fa-envelope
+          if (user)
+            li.nav-item.dropdown
+              a#navbarDropdownMenuLink-4.nav-link.dropdown-toggle(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                i.fa.fa-user
+              .dropdown-menu.dropdown-menu-right.dropdown-info(aria-labelledby='navbarDropdownMenuLink-4')
+                a.dropdown-item(href="/pots") #{user.name}
+                a.dropdown-item(href='/logout') Logout
+          if (!user)
+            li.nav-item
+              a.nav-link(type="button", data-toggle="modal", data-target="#modalLogin") Login
+            li.nav-item
+              a.nav-link(type="button", data-toggle="modal", data-target="#modalRegister") Sign up
+
+    div.container
+      div.content
+        block content
+  footer.page-footer.font-small.blue.mt-5
+    .footer-copyright.text-center.py-3
+      | © 2019 Copyright:
+      a(href='/') SmartfarmIO.ml
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  //- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  //- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  //- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.7/js/mdb.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+  script(type='text/javascript', src="/js/popper.min.js")
+  script(type='text/javascript', src="/js/bootstrap.min.js")
+  script(type='text/javascript', src="/js/mdb.min.js")
+  script(type='text/javascript', src="/js/chart.js")
+  block scriptBlock

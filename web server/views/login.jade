@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  .card
+    .card-body.px-lg-5.pt-0
+      form.text-center(style='color: #757575;', role='form', action='/login', method='post')
+        .md-form
+          input#inputEmail.form-control(type='email', name='username', required, autofocus)
+          label(for='inputEmail') E-mail
+        .md-form
+          input#inputPassword.form-control(type='password', name='password')
+          label(for='inputPassword') Password
+        .d-flex.justify-content-around
+          div
+            .form-check
+              input#materialLoginFormRemember.form-check-input(type='checkbox')
+              label.form-check-label(for='materialLoginFormRemember') Remember me
+          div
+            a(href='') Forgot password?
+        button.btn.btn-outline-info.btn-rounded.btn-block.my-4.waves-effect.z-depth-0(type='submit') Sign in
+        p
+          | Not a member? 
+          a(href='/register') Register
+        p or sign in with:
+        a.btn-floating.btn-fb.btn-sm(type='button')
+          i.fa.fa-facebook-f
+        a.btn-floating.btn-tw.btn-sm(type='button')
+          i.fa.fa-twitter
+        a.btn-floating.btn-li.btn-sm(type='button')
+          i.fa.fa-linkedin-in
+        a.btn-floating.btn-git.btn-sm(type='button')
+          i.fa.fa-github

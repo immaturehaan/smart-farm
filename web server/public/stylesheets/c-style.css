@@ -1,0 +1,32 @@
+#potName {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+h4.card-title.font-weight-bold {
+  margin: 0;
+  padding: 0;
+  margin-right: 5px;
+}
+
+.e-hide {
+  display: none;
+}
+
+.pot .classic-tabs .nav li a {
+  color: #007bff;
+}
+
+.pot .classic-tabs .nav li a.active {
+  color: #007bff;
+}
+
+a.active {
+  color: #007bff;
+}
+
+a {
+  color: #007bff;
+}
