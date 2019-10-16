@@ -8,4 +8,4 @@ This source code is part of [Node.js, Express.js, Mongoose.js and Passport.js Au
 * Run 'npm install'
 * Run 'npm start' or 'nodemon'
 
-If you think this source code is useful, it will be great if you just give it star.
+If you think this source code is useful, it will be great if you give it star.
